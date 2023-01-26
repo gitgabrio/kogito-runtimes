@@ -15,8 +15,6 @@
  */
 package org.kie.kogito.jobs.management.springboot;
 
-import javax.annotation.PostConstruct;
-
 import org.kie.kogito.jobs.ProcessInstanceJobDescription;
 import org.kie.kogito.jobs.ProcessJobDescription;
 import org.kie.kogito.jobs.api.Job;
@@ -29,6 +27,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
+import jakarta.annotation.PostConstruct;
 
 @Component
 public class SpringRestJobsService extends RestJobsService {
@@ -72,7 +72,7 @@ public class SpringRestJobsService extends RestJobsService {
         ResponseEntity<String> result = restTemplate.postForEntity(getJobsServiceUri(),
                 job,
                 String.class);
-        if (result.getStatusCode().ordinal() == 200) {
+        if (result.getStatusCode().value() == 200) {
             LOGGER.debug("Creating of the job {} done with status code {} ", job, result.getStatusCode());
         }
         return job.getId();
